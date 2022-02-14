@@ -53,7 +53,18 @@ export class Quiz extends Component {
       })
     }
 
-    componenn
+    componentDidUpdate(prevProps,prevState){
+      const{currentIndex} = this.state;
+      if(this.state.currentIndex!=prevState.currentIndex){
+        this.setState(()=>{
+          return{
+            question: QuizData[currentIndex].question,
+            options: QuizData[currentIndex].options,
+            answer: QuizData[currentIndex].answer
+          }
+        });
+      }
+    }
 
   render() {
     return (
