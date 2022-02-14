@@ -67,9 +67,43 @@ export class Quiz extends Component {
     }
 
   render() {
+    const{question, options, currentindex, userAnswer, quizEnd} = this.state
+
+    if(quizEnd){
+      return(
+        <div>
+          <h1>Game over. Final Score is {this.state.score} points</h1>
+          <p>The Correct Answers for the quiz are</p>
+          <ul>
+            {QuizData.map((item,index) => (
+              <li className='options' key={index}>
+                {item.answer}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
     return (
       <div>
-        
+        <h2>{question}</h2>
+        <span>{`Question ${currentIndex + 1} of ${QuizData.length}`}</span>
+        {
+          options.map(option => 
+            <p key ={option.id} className={`options ${userAnswer === option? "selected" : null}`} 
+             onClick = {() => this.Check(option)}
+            >
+            </p>
+          )
+        }
+        {currentindex < QuizData.length - 1 && 
+        <button disabled = {this.state.disabled} onClick={this.nextQuestionHandler}>
+            Next Button
+        </button>}
+        {currentindex === QuizData.length-1 && 
+        <button onClick={this.finishHandler} disabled={this.state.disabled}>
+            Finish
+        </button>}
       </div>
     )
   }
